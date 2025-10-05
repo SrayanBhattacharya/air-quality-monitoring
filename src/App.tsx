@@ -18,7 +18,7 @@ function App() {
       (a, b) =>
         new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
     );
-  console.log("Weather Data Array:", weatherData);
+  const last10Points = weatherData.slice(-10);
 
   return (
     <div className="min-h-screen p-6 bg-gray-100">
@@ -28,13 +28,13 @@ function App() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <WeatherChart
-          data={weatherData}
+          data={last10Points}
           dataKey="temperature"
           color="#f87171"
         />
-        <WeatherChart data={weatherData} dataKey="humidity" color="#3b82f6" />
-        <WeatherChart data={weatherData} dataKey="pressure" color="#10b981" />
-        <WeatherChart data={weatherData} dataKey="altitude" color="#fbbf24" />
+        <WeatherChart data={last10Points} dataKey="humidity" color="#3b82f6" />
+        <WeatherChart data={last10Points} dataKey="pressure" color="#10b981" />
+        <WeatherChart data={last10Points} dataKey="altitude" color="#fbbf24" />
       </div>
     </div>
   );

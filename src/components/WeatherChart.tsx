@@ -29,7 +29,7 @@ const WeatherChart: React.FC<WeatherChartProps> = ({
         <YAxis />
         <Tooltip />
         <Legend />
-        <Line type="monotone" dataKey={dataKey} stroke={color} />
+        <Line type="monotone" dataKey={dataKey} stroke={color} dot={false} />
       </LineChart>
     </ResponsiveContainer>
   );
