@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { database, ref, onValue } from "../firebaseConfig";
 
 interface WeatherData {
+  [key: string]: string | number | undefined;
   altitude?: number;
   humidity?: number;
   pressure?: number;
@@ -15,7 +16,7 @@ export const useWeatherData = () => {
   const [data, setData] = useState<Record<string, WeatherData>>({});
 
   useEffect(() => {
-    const dbRef = ref(database, "/");
+    const dbRef = ref(database, "/env_data");
     const unsubscribe = onValue(dbRef, (snapshot) => {
       const value = snapshot.val();
       if (value) {
@@ -24,7 +25,7 @@ export const useWeatherData = () => {
     });
 
     return () => {
-      unsubscribe;
+      unsubscribe();
     };
   }, []);
 

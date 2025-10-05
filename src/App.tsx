@@ -1,18 +1,41 @@
 import { useWeatherData } from "./hooks/useWeatherData";
+import WeatherChart from "./components/WeatherChart";
 
 function App() {
-  const weatherData = useWeatherData();
+  const weatherDataObj = useWeatherData();
 
-  console.log("Live Weather Data:", weatherData);
+  const weatherData = Object.values(weatherDataObj)
+    .map((d) => ({
+      timestamp: d.timestamp,
+      altitude: d.altitude ?? 0,
+      humidity: d.humidity ?? 0,
+      pressure: d.pressure ?? 0,
+      temperature: d.temperature ?? 0,
+      pm10: d.pm10 ?? 0,
+      pm2_5: d.pm2_5 ?? 0,
+    }))
+    .sort(
+      (a, b) =>
+        new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
+    );
+  console.log("Weather Data Array:", weatherData);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-      <h1 className="text-2xl font-bold text-blue-600">
-        Firebase Live Dashboard 🚀
+    <div className="min-h-screen p-6 bg-gray-100">
+      <h1 className="text-3xl font-bold text-blue-600 mb-6">
+        Live Weather Dashboard 🚀
       </h1>
-      <pre className="mt-4 p-4 bg-white rounded shadow">
-        {JSON.stringify(weatherData, null, 2)}
-      </pre>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <WeatherChart
+          data={weatherData}
+          dataKey="temperature"
+          color="#f87171"
+        />
+        <WeatherChart data={weatherData} dataKey="humidity" color="#3b82f6" />
+        <WeatherChart data={weatherData} dataKey="pressure" color="#10b981" />
+        <WeatherChart data={weatherData} dataKey="altitude" color="#fbbf24" />
+      </div>
     </div>
   );
 }
