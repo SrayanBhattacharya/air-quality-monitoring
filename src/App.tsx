@@ -1,5 +1,13 @@
 import { useWeatherData } from "./hooks/useWeatherData";
 import WeatherChart from "./components/WeatherChart";
+import {
+  WiThermometer,
+  WiHumidity,
+  WiBarometer,
+  WiCloud,
+} from "react-icons/wi";
+import MetricCard from "./components/MetricCard";
+import { WiSmoke } from "react-icons/wi";
 
 function App() {
   const weatherDataObj = useWeatherData();
@@ -21,22 +29,75 @@ function App() {
   const last10Points = weatherData.slice(-10);
 
   return (
-    <div className="min-h-screen p-6 bg-gray-100">
-      <h1 className="text-3xl font-bold text-blue-600 mb-6">
-        Live Weather Dashboard 🚀
-      </h1>
+    <>
+      <div className="min-h-screen p-6 bg-gray-100">
+        <h1 className="text-3xl font-bold text-blue-600 mb-6">
+          Live Weather Dashboard 🚀
+        </h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <WeatherChart
-          data={last10Points}
-          dataKey="temperature"
-          color="#f87171"
-        />
-        <WeatherChart data={last10Points} dataKey="humidity" color="#3b82f6" />
-        <WeatherChart data={last10Points} dataKey="pressure" color="#10b981" />
-        <WeatherChart data={last10Points} dataKey="altitude" color="#fbbf24" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <WeatherChart
+            data={last10Points}
+            dataKey="temperature"
+            color="#f87171"
+          />
+          <WeatherChart
+            data={last10Points}
+            dataKey="humidity"
+            color="#3b82f6"
+          />
+          <WeatherChart
+            data={last10Points}
+            dataKey="pressure"
+            color="#10b981"
+          />
+          <WeatherChart
+            data={last10Points}
+            dataKey="altitude"
+            color="#fbbf24"
+          />
+        </div>
       </div>
-    </div>
+
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+        <MetricCard
+          title="Temperature"
+          value={last10Points[last10Points.length - 1]?.temperature}
+          icon={WiThermometer}
+          color="text-red-500"
+        />
+        <MetricCard
+          title="Humidity"
+          value={last10Points[last10Points.length - 1]?.humidity}
+          icon={WiHumidity}
+          color="text-blue-500"
+        />
+        <MetricCard
+          title="Pressure"
+          value={last10Points[last10Points.length - 1]?.pressure}
+          icon={WiBarometer}
+          color="text-green-500"
+        />
+        <MetricCard
+          title="Altitude"
+          value={last10Points[last10Points.length - 1]?.altitude}
+          icon={WiCloud}
+          color="text-yellow-500"
+        />
+        <MetricCard
+          title="PM2.5"
+          value={last10Points[last10Points.length - 1]?.pm2_5}
+          icon={WiSmoke}
+          color="text-purple-500"
+        />
+        <MetricCard
+          title="PM10"
+          value={last10Points[last10Points.length - 1]?.pm10}
+          icon={WiSmoke}
+          color="text-pink-500"
+        />
+      </div>
+    </>
   );
 }
 
