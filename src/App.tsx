@@ -8,6 +8,7 @@ import {
 } from "react-icons/wi";
 import MetricCard from "./components/MetricCard";
 import { WiSmoke } from "react-icons/wi";
+import ChartCard from "./components/ChartCard";
 
 function App() {
   const weatherDataObj = useWeatherData();
@@ -32,30 +33,43 @@ function App() {
     <>
       <div className="min-h-screen p-6 bg-gray-100">
         <h1 className="text-3xl font-bold text-blue-600 mb-6">
-          Live Weather Dashboard 🚀
+          Live Weather Dashboard
         </h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <WeatherChart
-            data={last10Points}
-            dataKey="temperature"
-            color="#f87171"
-          />
-          <WeatherChart
-            data={last10Points}
-            dataKey="humidity"
-            color="#3b82f6"
-          />
-          <WeatherChart
-            data={last10Points}
-            dataKey="pressure"
-            color="#10b981"
-          />
-          <WeatherChart
-            data={last10Points}
-            dataKey="altitude"
-            color="#fbbf24"
-          />
+          <ChartCard
+            title="Temperature"
+            alert={last10Points[last10Points.length - 1]?.temperature > 35}
+          >
+            <WeatherChart
+              data={last10Points}
+              dataKey="temperature"
+              color="#f87171"
+            />
+          </ChartCard>
+          <ChartCard title="Humidity" alert={false}>
+            <WeatherChart
+              data={last10Points}
+              dataKey="humidity"
+              color="#3b82f6"
+            />
+          </ChartCard>
+
+          <ChartCard title="Pressure" alert={false}>
+            <WeatherChart
+              data={last10Points}
+              dataKey="pressure"
+              color="#10b981"
+            />
+          </ChartCard>
+
+          <ChartCard title="Altitude" alert={false}>
+            <WeatherChart
+              data={last10Points}
+              dataKey="altitude"
+              color="#fbbf24"
+            />
+          </ChartCard>
         </div>
       </div>
 
@@ -65,6 +79,7 @@ function App() {
           value={last10Points[last10Points.length - 1]?.temperature}
           icon={WiThermometer}
           color="text-red-500"
+          alert={last10Points[last10Points.length - 1]?.temperature > 35}
         />
         <MetricCard
           title="Humidity"
@@ -89,12 +104,14 @@ function App() {
           value={last10Points[last10Points.length - 1]?.pm2_5}
           icon={WiSmoke}
           color="text-purple-500"
+          alert={last10Points[last10Points.length - 1]?.pm2_5 > 50}
         />
         <MetricCard
           title="PM10"
           value={last10Points[last10Points.length - 1]?.pm10}
           icon={WiSmoke}
           color="text-pink-500"
+          alert={last10Points[last10Points.length - 1]?.pm10 > 100}
         />
       </div>
     </>
