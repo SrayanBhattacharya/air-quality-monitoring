@@ -5,8 +5,8 @@ interface MetricCardProps {
   title: string;
   value: number | string;
   icon: IconType;
-  color?: string; // default icon color
-  alert?: boolean; // true if threshold exceeded
+  color?: string;
+  alert?: boolean;
 }
 
 const MetricCard: React.FC<MetricCardProps> = ({
